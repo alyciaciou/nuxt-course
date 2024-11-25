@@ -8,9 +8,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// definePageMeta({
-//   name: 'rooms',
-// })
+definePageMeta({
+  name: 'rooms',
+})
 
 const modules = ref([Autoplay, Navigation, Pagination]);
 
