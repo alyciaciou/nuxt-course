@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import RoomsDatePickerModal from '@/components/rooms/DatePickerModal.vue'
 
 definePageMeta({
   name: 'room-detail',

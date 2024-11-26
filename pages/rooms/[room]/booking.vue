@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import RoomsBookingLoading from '@/components/rooms/BookingLoading.vue'
 
 const router = useRouter()
 
