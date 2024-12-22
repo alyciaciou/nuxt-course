@@ -21,19 +21,33 @@
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         return (
             pattern.test(email.value) &&
-            password.value.length >= 6 &&
+            password.value.length >= 12 &&
             password.value === confirmPassword.value
         )
     })
 
-    const nextStep = () => {
+    const nextStep = async () => {
+        try {
+            const verifyEmail = { email: email.value }
+            const res = await $fetch(
+                "https://freyja-s8qg.onrender.com/api/v1/verify/email",
+                {
+                    method: "POST",
+                    body: verifyEmail,
+                }
+            )
+            if (res.result.isEmailExists)
+                return alert("此信箱已註冊") && (isConfirm.value = false)
+        } catch (error) {
+            alert("請稍後再試")
+        }
         isConfirm.value
             ? (isEmailAndPasswordValid.value = true)
-            : alert("請確認電子郵件格式正確，密碼一致且至少6個字元")
+            : alert("請確認電子郵件格式正確，密碼一致且至少12個字元")
     }
     const signup = async () => {
         if (!isChecked.value) {
-            alert("請閱讀並勾選同意個資使用規範！")
+            alert("請勾選同意本網站個資使用規範")
             return
         }
 
@@ -55,25 +69,20 @@
         }
 
         try {
-            const response = await $fetch(
-                "https://localhost:3005/api/v1/user/signup",
+            const res = await $fetch(
+                "https://freyja-s8qg.onrender.com/api/v1/user/signup",
                 {
                     method: "POST",
                     body: info,
                 }
             )
-            console.log(response)
 
-            // 根據返回結果判斷
-            if (response.status) {
-                alert("註冊成功！即將跳轉到登入頁面")
+            if (res.status) {
+                alert("您已完成註冊，即將回到登入頁")
                 router.push("/account/login")
-            } else {
-                alert(`註冊失敗：${response.message}`)
             }
         } catch (error) {
-            console.error("註冊過程中發生錯誤：", error)
-            alert("註冊失敗，請稍後再試！")
+            alert("註冊失敗")
         }
     }
 </script>
@@ -263,16 +272,16 @@
                                 class="form-select p-4 text-neutral-80 fw-medium rounded-3"
                             >
                                 <option value="臺北市">臺北市</option>
-                                <option value="臺中市">臺中市</option>
-                                <option selected value="高雄市">高雄市</option>
+                                <option value="新北市">新北市</option>
+                                <option selected value="臺中市">臺中市</option>
                             </select>
                             <select
                                 v-model="district"
                                 class="form-select p-4 text-neutral-80 fw-medium rounded-3"
                             >
-                                <option value="330">前金區</option>
-                                <option value="330">鹽埕區</option>
-                                <option selected value="330">新興區</option>
+                                <option value="231">永和區</option>
+                                <option value="234">中和區</option>
+                                <option selected value="357">板橋區</option>
                             </select>
                         </div>
                         <input
