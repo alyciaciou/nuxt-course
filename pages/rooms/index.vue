@@ -74,15 +74,12 @@
                     各種房型，任您挑選
                 </h2>
 
-                <!-- 顯示載入中 -->
                 <div v-if="pending" class="text-center">載入中</div>
 
-                <!-- 顯示錯誤訊息 -->
                 <div v-if="error" class="text-center text-danger">
                     無法載入房型資料：{{ error.message }}
                 </div>
 
-                <!-- 動態渲染房型資訊 -->
                 <ul
                     v-if="!pending && !error"
                     class="d-flex flex-column gap-6 gap-md-12 list-unstyled"

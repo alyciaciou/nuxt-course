@@ -8,7 +8,6 @@
     const route = useRoute()
     const router = useRouter()
     const roomId = route.params.room
-
     const token = useCookie("auth_token")
     const isLoggedIn = computed(() => !!token.value)
     const roomDetail = ref({
@@ -17,7 +16,6 @@
         error: null,
     })
 
-    // 獲取房型詳細資料
     const getRoomDetail = async () => {
         try {
             roomDetail.value.pending = true
@@ -47,7 +45,6 @@
         datePickerModal.value.openModal()
     }
 
-    const MAX_BOOKING_PEOPLE = 10
     const bookingPeople = ref(1)
 
     const daysCount = ref(0)
@@ -461,7 +458,7 @@
                                             :class="{
                                                 'disabled bg-neutral-40':
                                                     bookingPeople ===
-                                                    MAX_BOOKING_PEOPLE,
+                                                    roomDetail.data.maxPeople,
                                             }"
                                             class="btn btn-neutral-0 p-4 border border-neutral-40 rounded-circle"
                                             type="button"
@@ -522,6 +519,7 @@
                     </div>
                     <NuxtLink
                         :to="{
+                            name: 'booking',
                             path: `/rooms/${roomId}/booking`,
                             params: { room: route.params.room },
                         }"
