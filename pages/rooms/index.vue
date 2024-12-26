@@ -13,7 +13,7 @@
     })
     const modules = ref([Autoplay, Navigation, Pagination])
 
-    const { data, pending, error } = await useFetch(
+    const { data, status, error } = await useFetch(
         "https://freyja-s8qg.onrender.com/api/v1/rooms/"
     )
     const roomsData = computed(() => data.value?.result || [])
@@ -74,14 +74,14 @@
                     各種房型，任您挑選
                 </h2>
 
-                <div v-if="pending" class="text-center">載入中</div>
+                <div v-if="!status" class="text-center">載入中</div>
 
                 <div v-if="error" class="text-center text-danger">
                     無法載入房型資料：{{ error.message }}
                 </div>
 
                 <ul
-                    v-if="!pending && !error"
+                    v-if="status && !error"
                     class="d-flex flex-column gap-6 gap-md-12 list-unstyled"
                 >
                     <li
